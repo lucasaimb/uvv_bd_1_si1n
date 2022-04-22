@@ -35,3 +35,464 @@
 450  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
 496  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
 3204 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+474  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+535  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+536  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+579  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3468 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+24373 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+CREATE TABLE funcionario (
+                cpf CHAR(11) NOT NULL,
+                primeiro_nome VARCHAR(15) NOT NULL,
+                nome_meio CHAR(1),
+                ultimo_nome VARCHAR(15) NOT NULL,
+                data_nascimento DATE,
+                endereco VARCHAR(30),
+                sexo CHAR(1),
+                salario DECIMAL(10,2),
+                cpf_supervisor CHAR(11) NOT NULL,
+                numero_departamento INTEGER NOT NULL,
+                CONSTRAINT funcionarios_pk PRIMARY KEY (cpf)
+)
+24373 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE departamento (
+                numero_departamento INTEGER NOT NULL,
+                nome_departamento VARCHAR(15) NOT NULL,
+                cpf_gerente CHAR(11) NOT NULL,
+                data_inicio_gerente DATE,
+                CONSTRAINT departamento_pk PRIMARY KEY (numero_departamento)
+)
+24374 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX departamento_idx
+ ON departamento
+ ( nome_departamento )
+24374 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE localizacoes_departamento (
+                numero_departamento INTEGER NOT NULL,
+                local VARCHAR(15) NOT NULL,
+                CONSTRAINT localizacoes_departamento_pk PRIMARY KEY (numero_departamento, local)
+)
+24374 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE projeto (
+                numero_projeto INTEGER NOT NULL,
+                nome_projeto VARCHAR(15) NOT NULL,
+                local_projeto VARCHAR(15),
+                numero_departamento INTEGER NOT NULL,
+                CONSTRAINT projeto_pk PRIMARY KEY (numero_projeto)
+)
+24374 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX projeto_idx
+ ON projeto
+ ( nome_projeto )
+24374 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE trabalha_em (
+                cpf_funcionario CHAR(11) NOT NULL,
+                numero_projeto INTEGER NOT NULL,
+                horas DECIMAL(3,1) NOT NULL,
+                CONSTRAINT trabalha_em_pk PRIMARY KEY (cpf_funcionario, numero_projeto)
+)
+24375 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE dependente (
+                cpf_funcionario CHAR(11) NOT NULL,
+                nome_dependente VARCHAR(15) NOT NULL,
+                sexo CHAR(1),
+                data_nascimento DATE,
+                parentesco VARCHAR(15),
+                CONSTRAINT dependente_pk PRIMARY KEY (cpf_funcionario, nome_dependente)
+)
+24375 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_cpf_supervisor_fk
+FOREIGN KEY (cpf_supervisor)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24375 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE dependente ADD CONSTRAINT funcionario_dependente_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24376 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24376 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE departamento ADD CONSTRAINT funcionario_departamento_fk
+FOREIGN KEY (cpf_gerente)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24376 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24376 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24376 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
+FOREIGN KEY (numero_projeto)
+REFERENCES projeto (numero_projeto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+24380 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.swingui.SQLScriptDialog  - The list size is :15
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+933  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+1004 [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+1005 [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+1060 [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+4150 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+11447 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+CREATE TABLE funcionario (
+                cpf CHAR(11) NOT NULL,
+                primeiro_nome VARCHAR(15) NOT NULL,
+                nome_meio CHAR(1),
+                ultimo_nome VARCHAR(15) NOT NULL,
+                data_nascimento DATE,
+                endereco VARCHAR(30),
+                sexo CHAR(1),
+                salario DECIMAL(10,2),
+                cpf_supervisor CHAR(11) NOT NULL,
+                numero_departamento INTEGER NOT NULL,
+                CONSTRAINT funcionarios_pk PRIMARY KEY (cpf)
+)
+11448 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE departamento (
+                numero_departamento INTEGER NOT NULL,
+                nome_departamento VARCHAR(15) NOT NULL,
+                cpf_gerente CHAR(11) NOT NULL,
+                data_inicio_gerente DATE,
+                CONSTRAINT departamento_pk PRIMARY KEY (numero_departamento)
+)
+11449 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX departamento_idx
+ ON departamento
+ ( nome_departamento )
+11449 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE localizacoes_departamento (
+                numero_departamento INTEGER NOT NULL,
+                local VARCHAR(15) NOT NULL,
+                CONSTRAINT localizacoes_departamento_pk PRIMARY KEY (numero_departamento, local)
+)
+11450 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE projeto (
+                numero_projeto INTEGER NOT NULL,
+                nome_projeto VARCHAR(15) NOT NULL,
+                local_projeto VARCHAR(15),
+                numero_departamento INTEGER NOT NULL,
+                CONSTRAINT projeto_pk PRIMARY KEY (numero_projeto)
+)
+11471 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX projeto_idx
+ ON projeto
+ ( nome_projeto )
+11471 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE trabalha_em (
+                cpf_funcionario CHAR(11) NOT NULL,
+                numero_projeto INTEGER NOT NULL,
+                horas DECIMAL(3,1) NOT NULL,
+                CONSTRAINT trabalha_em_pk PRIMARY KEY (cpf_funcionario, numero_projeto)
+)
+11471 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE dependente (
+                cpf_funcionario CHAR(11) NOT NULL,
+                nome_dependente VARCHAR(15) NOT NULL,
+                sexo CHAR(1),
+                data_nascimento DATE,
+                parentesco VARCHAR(15),
+                CONSTRAINT dependente_pk PRIMARY KEY (cpf_funcionario, nome_dependente)
+)
+11471 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_cpf_supervisor_fk
+FOREIGN KEY (cpf_supervisor)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11472 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE dependente ADD CONSTRAINT funcionario_dependente_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11472 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11472 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE departamento ADD CONSTRAINT funcionario_departamento_fk
+FOREIGN KEY (cpf_gerente)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11472 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11472 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11473 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
+FOREIGN KEY (numero_projeto)
+REFERENCES projeto (numero_projeto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE
+11476 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.swingui.SQLScriptDialog  - The list size is :15
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+370  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+423  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+424  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+472  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3162 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+26061 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+CREATE TABLE funcionario (
+                cpf CHAR(11) NOT NULL,
+                primeiro_nome VARCHAR(15) NOT NULL,
+                nome_meio CHAR(1),
+                ultimo_nome VARCHAR(15) NOT NULL,
+                data_nascimento DATE,
+                endereco VARCHAR(30),
+                sexo CHAR(1),
+                salario DECIMAL(10,2),
+                cpf_supervisor CHAR(11) NOT NULL,
+                numero_departamento INT NOT NULL,
+                PRIMARY KEY (cpf)
+)
+26061 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE departamento (
+                numero_departamento INT NOT NULL,
+                nome_departamento VARCHAR(15) NOT NULL,
+                cpf_gerente CHAR(11) NOT NULL,
+                data_inicio_gerente DATE,
+                PRIMARY KEY (numero_departamento)
+)
+26061 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX departamento_idx
+ ON departamento
+ ( nome_departamento )
+26062 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE localizacoes_departamento (
+                numero_departamento INT NOT NULL,
+                local VARCHAR(15) NOT NULL,
+                PRIMARY KEY (numero_departamento, local)
+)
+26062 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE projeto (
+                numero_projeto INT NOT NULL,
+                nome_projeto VARCHAR(15) NOT NULL,
+                local_projeto VARCHAR(15),
+                numero_departamento INT NOT NULL,
+                PRIMARY KEY (numero_projeto)
+)
+26062 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE UNIQUE INDEX projeto_idx
+ ON projeto
+ ( nome_projeto )
+26062 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+CREATE TABLE trabalha_em (
+                cpf_funcionario CHAR(11) NOT NULL,
+                numero_projeto INT NOT NULL,
+                horas DECIMAL(3,1) NOT NULL,
+                PRIMARY KEY (cpf_funcionario, numero_projeto)
+)
+26062 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+CREATE TABLE dependente (
+                cpf_funcionario CHAR(11) NOT NULL,
+                nome_dependente VARCHAR(15) NOT NULL,
+                sexo CHAR(1),
+                data_nascimento DATE,
+                parentesco VARCHAR(15),
+                PRIMARY KEY (cpf_funcionario, nome_dependente)
+)
+26063 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+
+ALTER TABLE funcionario ADD CONSTRAINT funcionario_cpf_supervisor_fk
+FOREIGN KEY (cpf_supervisor)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26063 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE dependente ADD CONSTRAINT funcionario_dependente_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26063 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT funcionario_trabalha_em_fk
+FOREIGN KEY (cpf_funcionario)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26064 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE departamento ADD CONSTRAINT funcionario_departamento_fk
+FOREIGN KEY (cpf_gerente)
+REFERENCES funcionario (cpf)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26064 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26064 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
+FOREIGN KEY (numero_departamento)
+REFERENCES departamento (numero_departamento)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26064 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ddl.GenericDDLGenerator  - endStatement: 
+
+ALTER TABLE trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
+FOREIGN KEY (numero_projeto)
+REFERENCES projeto (numero_projeto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+26069 [AWT-EventQueue-0] INFO  ca.sqlpower.architect.swingui.SQLScriptDialog  - The list size is :15
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+418  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+488  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+488  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+547  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3324 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+419  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+489  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+490  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+547  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3228 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+415  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+482  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+483  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+531  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3219 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+451  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+510  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+510  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+564  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3383 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+377  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+437  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+438  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+485  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3360 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+381  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+442  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+442  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+489  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3262 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+376  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+433  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+434  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+483  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3140 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+395  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+451  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+452  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+496  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3155 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+377  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+434  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+434  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+485  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3067 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
+0    [AWT-EventQueue-0] INFO  ca.sqlpower.architect.ArchitectUtils  - Log4J configured successfully
+802  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+864  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+864  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Beginning to read/merge new pl.ini data
+916  [AWT-EventQueue-0] INFO  ca.sqlpower.sql.PlDotIni  - Finished reading file.
+3678 [Thread-5] ERROR ca.sqlpower.architect.swingui.action.CheckForUpdateAction  - Fail to retrieve current version number!
