@@ -1,3 +1,6 @@
+CREATE SCHEMA elmasri
+AUTHORIZATION lucas;
+
 
 -- Criando a tabela funcionario.
 
@@ -18,15 +21,15 @@ CREATE TABLE funcionario (
 
 -- Comentando a tabela funcionario.
 
-COMMENT ON COLUMN funcionario.cpf IS 'CPF do funcionário. Será a PK da tabela.';
-COMMENT ON COLUMN funcionario.primeiro_nome IS 'Primeiro nome do funcionário.';
+COMMENT ON COLUMN funcionario.cpf IS 'CPF do funcionario. Sera a PK da tabela.';
+COMMENT ON COLUMN funcionario.primeiro_nome IS 'Primeiro nome do funcionario.';
 COMMENT ON COLUMN funcionario.nome_meio IS 'Inicial do nome do meio.';
-COMMENT ON COLUMN funcionario.ultimo_nome IS 'Sobrenome do funcionário.';
-COMMENT ON COLUMN funcionario.endereco IS 'Endereço do funcionário.';
-COMMENT ON COLUMN funcionario.sexo IS 'Sexo do funcionário.';
-COMMENT ON COLUMN funcionario.salario IS 'Salário do funcionário.';
-COMMENT ON COLUMN funcionario.cpf_supervisor IS 'CPF do supervisor. Será uma FK para a própria tabela (um auto-relacionamento).';
-COMMENT ON COLUMN funcionario.numero_departamento IS 'Número do departamento do funcionário.';
+COMMENT ON COLUMN funcionario.ultimo_nome IS 'Sobrenome do funcionario.';
+COMMENT ON COLUMN funcionario.endereco IS 'Endereço do funcionario.';
+COMMENT ON COLUMN funcionario.sexo IS 'Sexo do funcionario.';
+COMMENT ON COLUMN funcionario.salario IS 'Salario do funcionario.';
+COMMENT ON COLUMN funcionario.cpf_supervisor IS 'CPF do supervisor. Sera uma FK para a propria tabela (um auto-relacionamento).';
+COMMENT ON COLUMN funcionario.numero_departamento IS 'Numero do departamento do funcionario.';
 
 -- Criando a tabela departamento.
 
@@ -40,10 +43,10 @@ CREATE TABLE departamento (
 
 -- Comentando a tabela departamento.
 
-COMMENT ON COLUMN departamento.numero_departamento IS 'Número do departamento. É a PK desta tabela.';
-COMMENT ON COLUMN departamento.nome_departamento IS 'Nome do departamento. Deve ser único.';
-COMMENT ON COLUMN departamento.cpf_gerente IS 'CPF do gerente do departamento. É uma FK para a tabela funcionários.';
-COMMENT ON COLUMN departamento.data_inicio_gerente IS 'Data do início do gerente no departamento.';
+COMMENT ON COLUMN departamento.numero_departamento IS 'Numero do departamento. E a PK desta tabela.';
+COMMENT ON COLUMN departamento.nome_departamento IS 'Nome do departamento. Deve ser unico.';
+COMMENT ON COLUMN departamento.cpf_gerente IS 'CPF do gerente do departamento. E uma FK para a tabela funcionarios.';
+COMMENT ON COLUMN departamento.data_inicio_gerente IS 'Data do inicio do gerente no departamento.';
 
 -- Criando o Index Único/ Chave Alternativa na tabela departamento
 
@@ -61,7 +64,7 @@ CREATE TABLE localizacoes_departamento (
 
 -- Comentando a tabela localizacoes_departamento.
 
-COMMENT ON COLUMN localizacoes_departamento.numero_departamento IS 'Número do departamento. Faz parta da PK desta tabela e também é uma FK para a tabela departamento.';
+COMMENT ON COLUMN localizacoes_departamento.numero_departamento IS 'Numero do departamento. Faz parta da PK desta tabela e tambem e uma FK para a tabela departamento.';
 COMMENT ON COLUMN localizacoes_departamento.local IS 'Localização do departamento. Faz parte da PK desta tabela.';
 
 -- Criando a tabela projeto.
@@ -76,10 +79,10 @@ CREATE TABLE projeto (
 
 -- Comentando a tabela projeto.
 
-COMMENT ON COLUMN projeto.numero_projeto IS 'Número do projeto. É a PK desta tabela.';
-COMMENT ON COLUMN projeto.nome_projeto IS 'Nome do projeto. Deve ser único.';
+COMMENT ON COLUMN projeto.numero_projeto IS 'Numero do projeto. E a PK desta tabela.';
+COMMENT ON COLUMN projeto.nome_projeto IS 'Nome do projeto. Deve ser unico.';
 COMMENT ON COLUMN projeto.local_projeto IS 'Localização do projeto.';
-COMMENT ON COLUMN projeto.numero_departamento IS 'Número do departamento. É uma FK para a tabela departamento.';
+COMMENT ON COLUMN projeto.numero_departamento IS 'Numero do departamento. E uma FK para a tabela departamento.';
 
 -- Criando o Index Único/ Chave Alternativa na tabela projeto.
 
@@ -98,9 +101,9 @@ CREATE TABLE trabalha_em (
 
 -- Comentando a tabela trabalha_em.
 
-COMMENT ON COLUMN trabalha_em.cpf_funcionario IS 'CPF do funcionário. Faz parte da PK desta tabela e é uma FK para a tabela funcionário.';
-COMMENT ON COLUMN trabalha_em.numero_projeto IS 'Número do projeto. Faz parte da PK desta tabela e é uma FK para a tabela projeto.';
-COMMENT ON COLUMN trabalha_em.horas IS 'Horas trabalhadas pelo funcionário neste projeto.';
+COMMENT ON COLUMN trabalha_em.cpf_funcionario IS 'CPF do funcionario. Faz parte da PK desta tabela e e uma FK para a tabela funcionario.';
+COMMENT ON COLUMN trabalha_em.numero_projeto IS 'Numero do projeto. Faz parte da PK desta tabela e e uma FK para a tabela projeto.';
+COMMENT ON COLUMN trabalha_em.horas IS 'Horas trabalhadas pelo funcionario neste projeto.';
 
 -- Criando a tabela dependente.
 
@@ -115,11 +118,11 @@ CREATE TABLE dependente (
 
 -- Comentando a tabela dependente.
 
-COMMENT ON COLUMN dependente.cpf_funcionario IS 'CPF do funcionário. Faz parte da PK desta tabela e é uma FK para a tabela funcionário.';
+COMMENT ON COLUMN dependente.cpf_funcionario IS 'CPF do funcionario. Faz parte da PK desta tabela e e uma FK para a tabela funcionario.';
 COMMENT ON COLUMN dependente.nome_dependente IS 'Nome do dependente. Faz parte da PK desta tabela.';
 COMMENT ON COLUMN dependente.sexo IS 'Sexo do dependente.';
 COMMENT ON COLUMN dependente.data_nascimento IS 'Data de nascimento do dependente.';
-COMMENT ON COLUMN dependente.parentesco IS 'Descrição do parentesco do dependente com o funcionário.';
+COMMENT ON COLUMN dependente.parentesco IS 'Descriçao do parentesco do dependente com o funcionario.';
 
 -- Adicionando as FK nas tabelas.
 
@@ -377,11 +380,3 @@ insert into trabalha_em values (
 insert into trabalha_em values (
 88866555576, 20, null
 );
-
-
-
-
-
-
-
-

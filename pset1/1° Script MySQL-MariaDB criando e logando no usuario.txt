@@ -1,0 +1,7 @@
+-- Criando e conectando no usuario
+
+create user lucas identified by 'lucas123';
+
+grant all privileges on *.* to 'lucas';
+
+system mysql -ulucas -p

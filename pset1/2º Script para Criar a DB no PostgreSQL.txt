@@ -1,6 +1,0 @@
-create database uvv
- with
- owner = lucas
- template = template0
- encoding = UTF8
- allow_connections = true;
