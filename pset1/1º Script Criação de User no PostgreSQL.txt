@@ -1,0 +1,2 @@
+create user lucas superuser inherit createdb createrole;
+alter user lucas password 'lucas123';
