@@ -28,3 +28,4 @@ SET SEARCH_PATH TO elmasri, "$user", public;
 \c uvv lucas;
 
 
+
