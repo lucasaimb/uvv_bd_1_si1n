@@ -1,0 +1,200 @@
+-- Questão 1 --
+
+SELECT func.numero_departamento AS departamento,
+	 AVG(salario) AS media_salarial 
+FROM funcionario func
+GROUP by func.numero_departamento
+ORDER by func.numero_departamento asc;
+
+-- Questão 2 
+
+SELECT 
+	funcionario.sexo AS sexo, 
+	AVG(salario) AS media_salarial 
+FROM funcionario
+GROUP BY funcionario.sexo
+ORDER BY funcionario.sexo;
+
+-- Questão 3 
+
+SELECT 
+	nome_departamento AS departamento, 
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome completo', 
+	data_nascimento, 
+	TIMESTAMPDIFF(YEAR, data_nascimento,NOW()) AS idade, 
+	salario
+FROM funcionario func
+INNER JOIN departamento dep 
+ON func.numero_departamento = dep.numero_departamento;
+
+-- Questão 4
+
+SELECT 
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome completo',
+ 	TIMESTAMPDIFF(YEAR, data_nascimento,NOW()) AS idade, 
+	salario AS 'salario atual',
+CASE
+	WHEN salario < 35000.00 THEN salario + salario * 0.20
+	WHEN salario >= 35000.00 THEN salario + salario * 0.15
+END 'salario atualizado'
+FROM funcionario;
+
+-- Questão 5 
+
+SELECT
+	nome_departamento AS departamento,
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'funcionario',
+	CASE 
+		WHEN func.cpf = dep.cpf_gerente THEN 'gerente'
+		ELSE 'funcionario'
+	END AS 'cargo'
+FROM funcionario func
+INNER JOIN departamento dep
+	ON func.numero_departamento = dep.numero_departamento
+ORDER BY 
+	nome_departamento ASC, 
+	salario DESC;
+
+-- Questão 6
+
+SELECT 
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome funcionario',
+ 	nome_departamento AS departamento,
+	CONCAT('',nome_dependente, ' ', ultimo_nome) AS 'nome dependente',
+ 	TIMESTAMPDIFF(YEAR, dpdt.data_nascimento,NOW()) AS 'idade dependente',
+	CASE
+		WHEN dpdt.sexo = 'F' then 'Feminino'
+		WHEN dpdt.sexo = 'M' then 'Masculino'
+	END AS 'Sexo dependente'
+FROM funcionario func
+INNER JOIN dependente dpdt
+	ON func.cpf = dpdt.cpf_funcionario
+INNER JOIN departamento dep
+ 	ON func.numero_departamento = dep.numero_departamento;
+
+-- Questão 7 
+
+SELECT
+ 	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome funcionario',
+	nome_departamento AS departamento,
+	salario
+FROM funcionario func
+INNER JOIN departamento dep
+	ON func.numero_departamento = dep.numero_departamento
+LEFT OUTER JOIN dependente dpdt
+	ON func.cpf = dpdt.cpf_funcionario
+WHERE dpdt.cpf_funcionario is null;
+
+
+-- Questão 8  
+
+SELECT DISTINCT
+	nome_departamento AS departamento,
+	nome_projeto AS projeto,
+	CONCAT('', primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome funcionario',
+	SUM(horas)
+FROM funcionario func
+INNER JOIN departamento dep
+	ON func.numero_departamento = dep.numero_departamento
+INNER JOIN projeto pjt
+	ON pjt.numero_departamento = dep.numero_departamento
+INNER JOIN trabalha_em trb
+	ON trb.numero_projeto = pjt.numero_projeto
+	WHERE func.cpf = trb.cpf_funcionario
+	GROUP BY cpf, nome_projeto
+	ORDER BY primeiro_nome;
+
+
+-- Questão 9
+SELECT 
+	nome_departamento,
+	nome_projeto,
+	pjt.numero_projeto,
+	sum(horas) AS 'horas departamento'
+FROM projeto pjt
+INNER JOIN departamento dep
+	ON dep.numero_departamento = pjt.numero_departamento
+INNER JOIN trabalha_em trb
+	ON trb.numero_projeto = pjt.numero_projeto
+GROUP BY pjt.numero_projeto;
+
+-- Questão 10
+
+SELECT 
+	nome_departamento AS 'nome departamento',
+	dep.numero_departamento AS 'numero departamento',
+	avg(salario) AS 'média salarial'
+FROM departamento dep
+INNER JOIN funcionario func
+	ON dep.numero_departamento = func.numero_departamento
+GROUP BY func.numero_departamento
+ORDER BY avg(salario);
+ 
+-- Questão 11
+
+SELECT
+	concat('', primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS funcionario,
+	nome_projeto AS projeto,
+	horas * 50.0 AS 'R$ por horas no projeto'
+	FROM funcionario func
+INNER JOIN trabalha_em trb
+	ON func.cpf = trb.cpf_funcionario
+INNER JOIN projeto pjt
+	ON pjt.numero_projeto = trb.numero_projeto;
+
+-- Questão 12
+
+SELECT DISTINCT
+	nome_departamento AS departamento,
+	nome_projeto AS projeto,
+	concat('', primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS funcionario
+FROM funcionario func
+INNER JOIN departamento dep
+	ON dep.numero_departamento = func.numero_departamento
+INNER JOIN projeto pjt
+	ON dep.numero_departamento = pjt.numero_departamento
+INNER JOIN trabalha_em trb
+	ON trb.numero_projeto = pjt.numero_projeto
+WHERE horas is null;
+
+-- Questão 13
+
+SELECT
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS nome,
+	sexo,
+	TIMESTAMPDIFF(YEAR, data_nascimento,NOW()) AS idade
+FROM funcionario
+UNION
+SELECT
+	CONCAT('',nome_dependente, ' ', ultimo_nome),
+	dpdt.sexo,
+	TIMESTAMPDIFF(YEAR, dpdt.data_nascimento,NOW())
+FROM dependente dpdt
+INNER JOIN funcionario func
+	ON func.cpf = dpdt.cpf_funcionario
+ORDER BY idade;
+
+
+-- Questão 14
+
+SELECT 
+	nome_departamento AS departamento,
+	count(cpf) AS 'quantidade de funcionarios'
+FROM funcionario func
+INNER JOIN departamento dep
+	ON dep.numero_departamento = func.numero_departamento
+GROUP BY func.numero_departamento;
+
+-- Questão 15
+
+SELECT DISTINCT
+	CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome) AS 'nome funcionario',
+	nome_departamento AS departamento,
+	nome_projeto AS projeto
+FROM funcionario func
+INNER JOIN departamento dep
+	ON dep.numero_departamento = func.numero_departamento
+INNER JOIN projeto pjt
+	ON pjt.numero_departamento = func.numero_departamento
+WHERE pjt.numero_departamento = func.numero_departamento OR pjt.numero_projeto is null
+ORDER BY CONCAT('',primeiro_nome, ' ', nome_meio, ' ', ultimo_nome);
